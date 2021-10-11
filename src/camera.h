@@ -11,14 +11,14 @@ public:
 
 	void drawROIs();
 
-	Rod getRod() const;
-	Ball getBall() const;
+	Rod getRod();
+	Ball getBall();
 
 	const std::string& getName() const {return windowName_;}
 
 private:
 	Point getCenter(const cv::Rect& roi, const cv::Scalar& color,
-		const cv::Scalar& colorError) const;
+		const cv::Scalar& colorError);
 	bool colorInRange(const cv::Point3d& pixel, const cv::Scalar& targetColor,
         const cv::Scalar& colorError) const;
 

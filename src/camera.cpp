@@ -17,20 +17,20 @@ void Camera::drawROIs(){
 	cv::rectangle(frame_, rightSideRoi_, {0xFF,0x00,0xFF});
 }
 
-Rod Camera::getRod() const{
+Rod Camera::getRod(){
 	return Rod{getCenter(leftSideRoi_, {0x9F, 0x10, 0x8F}, {0x30, 0x10, 0x40}),
 			getCenter(rightSideRoi_, {0x9F, 0x10, 0x8F}, {0x30, 0x10, 0x40})};
 }
 
 Point Camera::getCenter(const cv::Rect& roi, const cv::Scalar& targetColor,
-		const cv::Scalar& colorError) const{
+		const cv::Scalar& colorError){
 	Point centerSum{0, 0};
 	int pixelCount = 0;
-	frame_(roi).forEach<cv::Point3f>([=](cv::Point3d& pixelColor, const int* position){
+	frame_(roi).forEach<cv::Point3d>([&](cv::Point3d& pixelColor, const int* position){
 		if(colorInRange(pixelColor, targetColor, colorError)){
 			centerSum.x += position[0];
 			centerSum.y += position[1];
-			//pixelCount++;
+			pixelCount++;
 		}
 	});
 	return centerSum / pixelCount;
